@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" ...>
+<modelVersion>4.0.0</modelVersion>
+<groupId>com.seunome</groupId>
+<artifactId>gerenciadorsenhas</artifactId>
+<version>1.0-SNAPSHOT</version>
+
+<dependencies>
+<!-- bcrypt para hashing de senha -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-crypto</artifactId>
+    <version>5.8.2</version>
+</dependency>
+
+<!-- Biblioteca para 2FA com Google Authenticator (TOTP) -->
+<dependency>
+    <groupId>com.warrenstrange</groupId>
+    <artifactId>googleauth</artifactId>
+    <version>1.4.0</version>
+</dependency>
+
+<!-- Biblioteca para JSON, se precisar salvar dados localmente -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.2</version>
+</dependency>
+
+<!-- Cliente HTTP para consumir APIs externas (verificação de vazamento) -->
+<dependency>
+    <groupId>org.apache.httpcomponents.client5</groupId>
+    <artifactId>httpclient5</artifactId>
+    <version>5.2.1</version>
+</dependency>
+</dependencies>
+        </project>
