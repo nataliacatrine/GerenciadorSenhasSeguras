@@ -1,5 +1,6 @@
 package model;
 
+import util.CriptografiaAES;
 import util.CriptografiaChaves;
 
 import javax.crypto.SecretKey;
@@ -7,37 +8,28 @@ import javax.crypto.SecretKey;
 public class Credencial {
     private String nomeServico;
     private String usuario;
-    private String senhaCriptografada;       // Senha criptografada com AES-GCM (Base64 com IV embutido)
-    private String chaveAESCriptografada;    // Chave AES criptografada com chave mestra (Base64 com IV embutido)
+    private String senhaCriptografada;
+    private String chaveAESBase64; // chave AES criptografada (em Base64)
 
+    // Construtor padrão para Jackson
     public Credencial() {}
 
-    /**
-     * Construtor usado ao criar uma nova credencial.
-     * Gera uma chave AES individual, criptografa a senha com ela e
-     * criptografa a chave AES com a chave mestra fornecida.
-     */
-
+    // Construtor ao criar nova credencial com a chave mestra
     public Credencial(String nomeServico, String usuario, String senha, SecretKey chaveMestra) {
-        if (nomeServico == null || nomeServico.trim().isEmpty()) {
-            throw new RuntimeException("nomeServico não pode ser nulo ou vazio");
-        }
-        if (usuario == null || usuario.trim().isEmpty()) {
-            throw new RuntimeException("usuario não pode ser nulo ou vazio");
-        }
-        if (chaveMestra == null) {
-            throw new RuntimeException("chaveMestra não pode ser nula");
-        }
-
         this.nomeServico = nomeServico;
         this.usuario = usuario;
 
+        // Gera chave AES individual (SecretKey)
+        SecretKey chaveAES = CriptografiaAES.gerarChaveAES();
+
+        // Criptografa a senha com a chave AES
+        this.senhaCriptografada = CriptografiaAES.encrypt(senha, CriptografiaAES.chaveParaBase64(chaveAES));
+
         try {
-            SecretKey chaveAES = CriptografiaChaves.gerarChaveAES();
-            this.senhaCriptografada = CriptografiaChaves.criptografarTextoComAES(senha, chaveAES);
-            this.chaveAESCriptografada = CriptografiaChaves.criptografarChaveAES(chaveAES, chaveMestra);
+            // Criptografa a chave AES com a chave mestra e salva em Base64
+            this.chaveAESBase64 = CriptografiaChaves.criptografarChaveAES(chaveAES, chaveMestra);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao gerar ou criptografar credencial", e);
+            throw new RuntimeException("Erro ao criptografar chave AES com chave mestra", e);
         }
     }
 
@@ -65,27 +57,23 @@ public class Credencial {
         this.senhaCriptografada = senhaCriptografada;
     }
 
-    public String getChaveAESCriptografada() {
-        return chaveAESCriptografada;
+    public String getChaveAESBase64() {
+        return chaveAESBase64;
     }
 
-    public void setChaveAESCriptografada(String chaveAESCriptografada) {
-        this.chaveAESCriptografada = chaveAESCriptografada;
+    public void setChaveAESBase64(String chaveAESBase64) {
+        this.chaveAESBase64 = chaveAESBase64;
     }
 
-    /**
-     * Descriptografa a senha utilizando a chave mestra fornecida.
-     */
+    // Método para descriptografar senha usando a chave mestra
     public String getSenhaDescriptografada(SecretKey chaveMestra) {
         try {
-            // 1. Descriptografa a chave AES com a chave mestra
-            SecretKey chaveAES = CriptografiaChaves.descriptografarChaveAES(chaveAESCriptografada, chaveMestra);
-
-            // 2. Descriptografa a senha com a chave AES
-            return CriptografiaChaves.descriptografarTextoComAES(senhaCriptografada, chaveAES);
-
+            // Descriptografa chave AES com a chave mestra
+            SecretKey chaveAES = CriptografiaChaves.descriptografarChaveAES(chaveAESBase64, chaveMestra);
+            // Descriptografa senha com chave AES (convertida para Base64)
+            return CriptografiaAES.decrypt(senhaCriptografada, CriptografiaAES.chaveParaBase64(chaveAES));
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao descriptografar a senha", e);
+            throw new RuntimeException("Erro ao descriptografar senha", e);
         }
     }
 }

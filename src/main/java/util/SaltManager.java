@@ -5,40 +5,28 @@ import java.security.SecureRandom;
 
 public class SaltManager {
     private static final String SALT_PATH = "dados/salt.bin";
-    private static final int TAMANHO_SALT = 16;
 
-    // Gera um novo salt aleatório
-    public static byte[] gerarNovoSalt() {
-        byte[] salt = new byte[TAMANHO_SALT];
-        new SecureRandom().nextBytes(salt);
-        return salt;
-    }
-
-    // Carrega um salt existente ou gera e salva um novo
+    // Retorna um salt existente ou cria um novo se não existir
     public static byte[] carregarOuGerarSalt() throws IOException {
         File file = new File(SALT_PATH);
 
         if (!file.exists()) {
-            byte[] salt = gerarNovoSalt();
-            salvarSalt(salt);
+            // Cria um novo salt aleatório
+            byte[] salt = new byte[16];
+            new SecureRandom().nextBytes(salt);
+
+            // Salva em arquivo
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(salt);
+            }
+
             return salt;
         }
 
-        return carregarSalt();
-    }
-
-    // Salva o salt no arquivo
-    private static void salvarSalt(byte[] salt) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(SALT_PATH)) {
-            fos.write(salt);
-        }
-    }
-
-    // Carrega o salt do arquivo
-    private static byte[] carregarSalt() throws IOException {
-        try (FileInputStream fis = new FileInputStream(SALT_PATH)) {
-            byte[] salt = new byte[TAMANHO_SALT];
-            if (fis.read(salt) != TAMANHO_SALT) {
+        // Carrega o salt do arquivo
+        try (FileInputStream fis = new FileInputStream(file)) {
+            byte[] salt = new byte[16];
+            if (fis.read(salt) != 16) {
                 throw new IOException("Salt corrompido ou incompleto.");
             }
             return salt;

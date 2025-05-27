@@ -13,9 +13,9 @@
     <dependencies>
         <!-- bcrypt para hashing de senha -->
         <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>5.8.2</version>
         </dependency>
 
         <!-- Biblioteca para 2FA com Google Authenticator (TOTP) -->
@@ -44,14 +44,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Mockito -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
 
