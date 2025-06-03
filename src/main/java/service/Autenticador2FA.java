@@ -1,4 +1,4 @@
-package util;
+package service;
 
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
@@ -13,5 +13,10 @@ public class Autenticador2FA {
 
     public static boolean validarToken(String chaveSecreta, int token) {
         return gAuth.authorize(chaveSecreta, token);
+    }
+
+    // Novo método para gerar token TOTP atual para uma chave secreta
+    public static int gerarTokenAtual(String chaveSecreta) {
+        return gAuth.getTotpPassword(chaveSecreta);
     }
 }

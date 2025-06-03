@@ -1,27 +1,35 @@
-package util;
+package app;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import util.SenhaMestra;
 
 import java.io.File;
+import java.io.IOException;
 
-public class SenhaMestraTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    @AfterEach
-    void cleanup() {
-        // Limpa a senha mestra criada para não interferir em outros testes
-        File file = new File("senhaMestra.dat"); // ajuste se seu arquivo for diferente
-        if (file.exists()) file.delete();
+class SenhaMestraTest {
+
+    private final String caminhoHash = "senha_mestra.hash";
+
+    @BeforeEach
+    void limparHash() {
+        File arquivo = new File(caminhoHash);
+        if (arquivo.exists()) {
+            arquivo.delete();
+        }
     }
 
     @Test
-    void testDefinirEVerificarSenhaMestra() throws Exception {
-        String senha = "senhaTeste123!";
-        SenhaMestra.definirNovaSenha(senha);
+    void testDefinirEVerificarSenha() throws IOException {
+        assertFalse(SenhaMestra.existeSenhaMestra());
 
-        Assertions.assertTrue(SenhaMestra.existeSenhaMestra());
-        Assertions.assertTrue(SenhaMestra.verificarSenha(senha));
-        Assertions.assertFalse(SenhaMestra.verificarSenha("senhaErrada"));
+        String senha = "minhaSenhaSegura";
+        SenhaMestra.definirNovaSenha(senha);
+        assertTrue(SenhaMestra.existeSenhaMestra());
+
+        assertTrue(SenhaMestra.verificarSenha(senha));
+        assertFalse(SenhaMestra.verificarSenha("senhaErrada"));
     }
 }
+

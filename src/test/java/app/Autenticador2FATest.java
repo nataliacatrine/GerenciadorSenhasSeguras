@@ -1,37 +1,28 @@
 package app;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import util.Autenticador2FA;
-import com.warrenstrange.googleauth.GoogleAuthenticator;
+import service.Autenticador2FA;
 
-public class Autenticador2FATest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    @Test
-    public void testeGerarChaveSecreta() {
-        String chave = Autenticador2FA.gerarChaveSecreta();
-        assertNotNull(chave, "Chave secreta não deve ser nula");
-        assertFalse(chave.isEmpty(), "Chave secreta não deve ser vazia");
-    }
+class Autenticador2FATest {
 
     @Test
-    public void testeValidarTokenValido() {
-        String chave = Autenticador2FA.gerarChaveSecreta();
-        GoogleAuthenticator gAuth = new GoogleAuthenticator();
-        int tokenValido = gAuth.getTotpPassword(chave);
+    void testGerarEValidarToken() {
+        // Gera chave secreta
+        String chaveSecreta = Autenticador2FA.gerarChaveSecreta();
+        assertNotNull(chaveSecreta);
 
-        boolean resultado = Autenticador2FA.validarToken(chave, tokenValido);
+        // Gera token atual pela classe Autenticador2FA
+        int tokenAtual = Autenticador2FA.gerarTokenAtual(chaveSecreta);
 
-        assertTrue(resultado, "O token válido deve ser aceito");
-    }
+        // Valida token gerado
+        boolean valido = Autenticador2FA.validarToken(chaveSecreta, tokenAtual);
+        assertTrue(valido);
 
-    @Test
-    public void testeValidarTokenInvalido() {
-        String chave = Autenticador2FA.gerarChaveSecreta();
-        int tokenInvalido = 123456; // token fixo que provavelmente é inválido
-
-        boolean resultado = Autenticador2FA.validarToken(chave, tokenInvalido);
-
-        assertFalse(resultado, "Um token inválido não deve ser aceito");
+        // Testa token inválido (ex: token -1)
+        boolean invalido = Autenticador2FA.validarToken(chaveSecreta, -1);
+        assertFalse(invalido);
     }
 }
+

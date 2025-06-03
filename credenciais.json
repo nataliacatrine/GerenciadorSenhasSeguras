@@ -1,0 +1,16 @@
+[ {
+  "nomeServico" : "uber",
+  "usuario" : "lucca",
+  "senhaCriptografada" : "fQxZT0AOrU1yXAQIZtS276SZOG+pkUHViaYLocA4OtYJXptkJ/MVQw==",
+  "chaveAESCriptografada" : "Uz457PJfTj9QVd8Dd26QGabUeqJBhWKDC4HTnFKIjLfhdb3Beh0YFYGgNnjNH+h3f5tFNocYoyhVuRt7"
+}, {
+  "nomeServico" : "99pop",
+  "usuario" : "natalia",
+  "senhaCriptografada" : "Btsiq5kfrLFN8tpSdeOs6OURj+Y+pFnzpMbq/QqE2B8ESR0bsbCT",
+  "chaveAESCriptografada" : "OhiLYruN2DoLH3m7IrXuj9f/32JCIp8U2PFCKBrsLqnDtmatD94pMNTrYMpJvdrlaJ38JfxbmP4uyair"
+}, {
+  "nomeServico" : "netflix",
+  "usuario" : "leticia",
+  "senhaCriptografada" : "LugAGsX+nh/yNidMCb0hGQ8glWFIlgSMgl7/BMsQ/rwHYAPaoxJFXg==",
+  "chaveAESCriptografada" : "kQkL3fs1KFHbuAu3WIsdVvKX6Gc9dTJmfwfGLBS3pEf7kF7ny+VQSIvIpLLE677kcGy8EZ+V5AFQmSE9"
+} ]
