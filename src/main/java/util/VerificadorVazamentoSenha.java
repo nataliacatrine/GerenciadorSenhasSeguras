@@ -33,7 +33,6 @@ public class VerificadorVazamentoSenha {
                 }
             }
         }
-
         return false; // Senha não vazada
     }
 
