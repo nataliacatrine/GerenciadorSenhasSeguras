@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 
 public class VerificadorVazamentoSenha {
 
@@ -38,7 +39,7 @@ public class VerificadorVazamentoSenha {
 
     private static String sha1Hex(String input) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-1");
-        byte[] bytes = md.digest(input.getBytes("UTF-8"));
+        byte[] bytes = md.digest(input.getBytes(StandardCharsets.UTF_8));
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
             sb.append(String.format("%02x", b));

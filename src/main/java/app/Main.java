@@ -140,6 +140,7 @@ public class Main {
                         System.out.println("Senha gerada: " + senha);
                     }
 
+                    // Verificando vazamento de senha caso esteja online
                     boolean senhaVazada;
                     try {
                         senhaVazada = VerificadorVazamentoSenha.senhaVazada(senha);
