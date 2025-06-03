@@ -1,6 +1,7 @@
-package util;
+package service;
 
 import org.junit.jupiter.api.Test;
+
 import javax.crypto.SecretKey;
 import static org.junit.jupiter.api.Assertions.*;
 

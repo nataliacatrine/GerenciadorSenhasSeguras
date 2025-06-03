@@ -1,8 +1,8 @@
-package integration;
+package app;
 
 import model.Credencial;
-import util.RepositorioCredenciais;
-import util.SenhaMestra;
+import repository.RepositorioCredenciais;
+import service.SenhaMestra;
 
 import org.junit.jupiter.api.*;
 import javax.crypto.SecretKey;

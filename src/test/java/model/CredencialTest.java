@@ -1,8 +1,8 @@
 package model;
 
 import org.junit.jupiter.api.Test;
-import util.CriptografiaChaves;
-import util.SaltManager;
+import service.CriptografiaChaves;
+import service.SaltManager;
 
 import javax.crypto.SecretKey;
 

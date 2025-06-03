@@ -1,11 +1,11 @@
-package integration;
+package security;
 
 import model.Credencial;
 import org.junit.jupiter.api.*;
-import util.RepositorioCredenciais;
-import util.SenhaMestra;
-import util.SaltManager;
-import util.CriptografiaChaves;
+import repository.RepositorioCredenciais;
+import service.SenhaMestra;
+import service.SaltManager;
+import service.CriptografiaChaves;
 
 import javax.crypto.SecretKey;
 import java.io.FileWriter;

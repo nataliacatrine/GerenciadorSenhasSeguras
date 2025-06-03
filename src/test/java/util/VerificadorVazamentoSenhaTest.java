@@ -1,7 +1,6 @@
-package test.util;
+package util;
 
 import org.junit.jupiter.api.Test;
-import util.VerificadorVazamentoSenha;
 
 import static org.junit.jupiter.api.Assertions.*;
 

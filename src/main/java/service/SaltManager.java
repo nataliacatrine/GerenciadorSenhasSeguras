@@ -1,4 +1,4 @@
-package util;
+package service;
 
 import java.io.*;
 import java.security.SecureRandom;

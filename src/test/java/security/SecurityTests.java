@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
-import util.SenhaMestra;
+import service.SenhaMestra;
 
-import java.io.File;
 import java.io.IOException;
 
 public class SecurityTests {

@@ -1,28 +1,19 @@
 package app;
 
-import org.junit.jupiter.api.*;
-import org.mockito.MockedStatic;
-import service.*;
-import util.SaltManager;
-import util.SenhaMestra;
-import util.RepositorioCredenciais;
+import service.SenhaMestra;
+import repository.RepositorioCredenciais;
 import service.Autenticador2FA;
 import service.Chave2FAUtil;
-import app.Main;
 
-import javax.crypto.SecretKey;
 import java.io.ByteArrayInputStream;
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class MainTest {
 

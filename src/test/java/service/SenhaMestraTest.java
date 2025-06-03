@@ -1,7 +1,6 @@
-package app;
+package service;
 
 import org.junit.jupiter.api.*;
-import util.SenhaMestra;
 
 import java.io.File;
 import java.io.IOException;

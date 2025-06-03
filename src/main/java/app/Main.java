@@ -1,8 +1,8 @@
 package app;
 
 import model.Credencial;
-import service.Autenticador2FA;
-import service.Chave2FAUtil;
+import repository.RepositorioCredenciais;
+import service.*;
 import util.*;
 import javax.crypto.SecretKey;
 import java.util.List;

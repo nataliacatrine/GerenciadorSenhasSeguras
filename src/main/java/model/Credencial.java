@@ -1,6 +1,6 @@
 package model;
 
-import util.CriptografiaChaves;
+import service.CriptografiaChaves;
 
 import javax.crypto.SecretKey;
 

@@ -1,7 +1,6 @@
-package app;
+package service;
 
 import org.junit.jupiter.api.Test;
-import service.Autenticador2FA;
 
 import static org.junit.jupiter.api.Assertions.*;
 
