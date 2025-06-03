@@ -140,12 +140,12 @@ public class Main {
                         System.out.println("Senha gerada: " + senha);
                     }
 
-                    boolean senhaVazada = false;
+                    boolean senhaVazada;
                     try {
                         senhaVazada = VerificadorVazamentoSenha.senhaVazada(senha);
                     } catch (Exception e) {
-                        System.out.println("Não foi possível verificar vazamento da senha (sem conexão com a internet ou erro na API). Prosseguindo sem verificação.");
-                        senhaVazada = false;  // permite o uso da senha no modo offline
+                        System.out.println("Não foi possível verificar vazamento da senha (sem conexão). Prosseguindo sem verificação.");
+                        senhaVazada = false;  // libera o uso da senha no modo offline
                     }
 
                     while (senhaVazada) {
@@ -159,11 +159,10 @@ public class Main {
                         try {
                             senhaVazada = VerificadorVazamentoSenha.senhaVazada(senha);
                         } catch (Exception e) {
-                            System.out.println("Não foi possível verificar vazamento da senha (sem conexão com a internet ou erro na API). Prosseguindo sem verificação.");
+                            System.out.println("Não foi possível verificar vazamento da senha (sem conexão). Prosseguindo sem verificação.");
                             senhaVazada = false;
                         }
                     }
-
 
                     Credencial nova = new Credencial(servico, usuario, senha, chaveMestra);
                     credenciais.add(nova);
@@ -207,6 +206,7 @@ public class Main {
                     break;
             }
         }
+
         scanner.close();
     }
 }
