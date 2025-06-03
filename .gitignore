@@ -37,6 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 
-chave_2fa.txt
 credenciais.json
+chave_2fa.txt
 senha_mestra.hash

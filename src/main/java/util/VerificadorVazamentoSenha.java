@@ -8,35 +8,33 @@ import java.security.MessageDigest;
 
 public class VerificadorVazamentoSenha {
 
-    public static boolean senhaVazada(String senha) {
-        try {
-            String sha1 = sha1Hex(senha).toUpperCase();
-            String prefixo = sha1.substring(0, 5);
-            String sufixo = sha1.substring(5);
+    public static boolean senhaVazada(String senha) throws Exception {
+        String sha1 = sha1Hex(senha).toUpperCase();
+        String prefixo = sha1.substring(0, 5);
+        String sufixo = sha1.substring(5);
 
-            URL url = new URL("https://api.pwnedpasswords.com/range/" + prefixo);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "GerenciadorSenhasSegurasApp");
+        URL url = new URL("https://api.pwnedpasswords.com/range/" + prefixo);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", "GerenciadorSenhasSegurasApp");
+        con.setConnectTimeout(3000);
+        con.setReadTimeout(3000);
 
-            int responseCode = con.getResponseCode();
-            if (responseCode != 200) {
-                throw new RuntimeException("Erro na API Pwned Passwords: Código " + responseCode);
-            }
+        int responseCode = con.getResponseCode();
+        if (responseCode != 200) {
+            throw new RuntimeException("API respondeu com código: " + responseCode);
+        }
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String linha;
-                while ((linha = in.readLine()) != null) {
-                    if (linha.startsWith(sufixo)) {
-                        return true;
-                    }
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            String linha;
+            while ((linha = in.readLine()) != null) {
+                if (linha.startsWith(sufixo)) {
+                    return true; // Senha vazada
                 }
             }
-            return false;
-
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao verificar vazamento da senha", e);
         }
+
+        return false; // Senha não vazada
     }
 
     private static String sha1Hex(String input) throws Exception {
