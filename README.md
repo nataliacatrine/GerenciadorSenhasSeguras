@@ -16,14 +16,30 @@ Este projeto Java é um **gerenciador de senhas seguro**, com foco em proteção
 
 ## 🛠️ Tecnologias utilizadas
 
-- Java 17
-- Maven
-- JUnit 5
-- BCrypt (hash de senha)
-- AES-GCM (criptografia simétrica)
-- Google Authenticator (TOTP)
-- Apache HttpClient
-- Jackson Databind
+- **Java 17**  
+  Linguagem principal do projeto.
+
+- **Maven**  
+  Gerenciador de dependências e automação de build.
+
+- **JUnit 5 + Mockito**  
+  Frameworks para testes automatizados unitários e de integração.
+
+- **PBKDF2 com HmacSHA256**  
+  Derivação segura da chave a partir da senha mestra.
+
+- **AES-GCM**  
+  Criptografia autenticada para proteger credenciais e chaves.
+
+- **Google Authenticator (TOTP)**  
+  Implementação de autenticação de dois fatores via Time-based One-Time Password.
+
+- **Apache HttpClient 5**  
+  Consumo de API externa para verificação de senhas comprometidas.
+
+- **Jackson Databind**  
+  Serialização e desserialização de arquivos JSON.
+
 
 ---
 
