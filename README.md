@@ -86,29 +86,18 @@ Você pode visualizá-la localmente abrindo o arquivo `index.html` ou acessar on
 
 ```
 GerenciadorSenhasSeguras/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   ├── app/
-│   │   │   │   └── Main.java
-│   │   │   ├── model/
-│   │   │   │   └── Credencial.java
-│   │   │   ├── repository/
-│   │   │   │   └── RepositorioCredenciais.java
-│   │   │   ├── security/
-│   │   │   │   ├── CriptografiaAES.java
-│   │   │   │   └── GeradorSenhaSegura.java
-│   │   │   ├── service/
-│   │   │   │   └── Autenticador2FA.java
-│   │   │   └── util/
-│   │   │       └── VerificadorVazamentoSenha.java
-│   └── test/
-│       └── java/
-│           └── (Testes unitários)
-├── pom.xml
-├── README.md
-└── target/
-    └── (gerado automaticamente)
+├── docs/javadoc/             # Documentação gerada pelo Javadoc
+├── src/main/java/            # Código-fonte principal
+│   ├── app/                  # Classe principal e aplicação
+│   ├── model/                # Classes de modelo (Credencial)
+│   ├── repository/           # Classes para acesso a dados
+│   ├── service/              # Lógica de negócio (serviços)
+│   └── util/                 # Utilitários diversos
+├── src/test/java/            # Testes automatizados
+├── pom.xml                   # Configuração do Maven
+├── README.md                 # Documentação do projeto
+└── target/                   # Build output gerado automaticamente pelo Maven
+
 ```
 
 ---
