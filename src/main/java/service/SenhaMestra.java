@@ -10,16 +10,32 @@ import java.nio.file.Files;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * Classe responsável pela definição, verificação, armazenamento segura e derivação da senha mestra.
+ * Utiliza PBKDF2 com HmacSHA256 para gerar hashes e derivar a chave AES a partir da senha do usuário.
+ */
 public class SenhaMestra {
 
     private static final String ARQUIVO_HASH = "senha_mestra.hash";
     private static final int ITERACOES = 65536;
     private static final int TAMANHO_CHAVE = 256;
 
+    /**
+     * Verifica se já existe uma senha mestra registrada no sistema.
+     *
+     * @return true se o arquivo de hash da senha mestra existir; false caso contrário.
+     */
     public static boolean existeSenhaMestra() {
         return new File(ARQUIVO_HASH).exists();
     }
 
+    /**
+     * Define e armazena uma nova senha mestra.
+     * Gera um salt aleatório e salva o hash da senha no formato Base64(salt):Base64(hash).
+     *
+     * @param senha A nova senha mestra a ser definida.
+     * @throws IOException se ocorrer erro ao gravar o arquivo.
+     */
     public static void definirNovaSenha(String senha) throws IOException {
         if (senha == null) {
             throw new IllegalArgumentException("Senha não pode ser nula");
@@ -32,9 +48,15 @@ public class SenhaMestra {
         }
     }
 
+    /**
+     * Verifica se a senha fornecida corresponde à senha mestra armazenada.
+     *
+     * @param senha A senha digitada pelo usuário.
+     * @return true se a senha for válida; false caso contrário.
+     * @throws IOException se ocorrer erro ao ler o arquivo de hash.
+     */
     public static boolean verificarSenha(String senha) throws IOException {
         if (senha == null) {
-            // Se senha for null, já retorna false para evitar NullPointerException
             return false;
         }
         String[] partes = new String(Files.readAllBytes(new File(ARQUIVO_HASH).toPath()), StandardCharsets.UTF_8).split(":");
@@ -45,6 +67,13 @@ public class SenhaMestra {
         return hashArmazenado.equals(hashDigitado);
     }
 
+    /**
+     * Gera o hash da senha utilizando PBKDF2 com o salt fornecido.
+     *
+     * @param senha A senha a ser hasheada.
+     * @param salt  O salt usado na derivação do hash.
+     * @return Hash da senha em Base64.
+     */
     private static String hashSenha(String senha, byte[] salt) {
         if (senha == null) {
             throw new IllegalArgumentException("Senha não pode ser nula");
@@ -59,6 +88,11 @@ public class SenhaMestra {
         }
     }
 
+    /**
+     * Gera um salt aleatório de 16 bytes para ser usado na derivação da senha.
+     *
+     * @return Array de bytes representando o salt.
+     */
     private static byte[] gerarSalt() {
         byte[] salt = new byte[16];
         new SecureRandom().nextBytes(salt);
@@ -67,7 +101,11 @@ public class SenhaMestra {
 
     /**
      * Deriva a chave mestra AES a partir da senha fornecida,
-     * utilizando o salt armazenado no arquivo hash.
+     * utilizando o salt armazenado no arquivo da senha mestra.
+     *
+     * @param senha A senha fornecida pelo usuário.
+     * @return Chave AES derivada a partir da senha.
+     * @throws IOException se ocorrer erro ao acessar o arquivo de hash.
      */
     public static SecretKey obterChaveMestra(String senha) throws IOException {
         if (senha == null) {
@@ -87,8 +125,9 @@ public class SenhaMestra {
     }
 
     /**
-     * Apaga de forma segura a senha mestra armazenada removendo o arquivo hash do disco.
-     * Retorna true se o arquivo foi apagado com sucesso, false caso contrário.
+     * Remove o arquivo que contém o hash da senha mestra, efetivamente apagando a senha armazenada.
+     *
+     * @return true se o arquivo foi apagado com sucesso; false caso contrário.
      */
     public static boolean apagarSenhaMestra() {
         File arquivo = new File(ARQUIVO_HASH);

@@ -56,8 +56,10 @@
         </dependency>
 
     </dependencies>
+
     <build>
         <plugins>
+            <!-- Plugin para executar a aplicação -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -66,8 +68,22 @@
                     <mainClass>app.Main</mainClass>
                 </configuration>
             </plugin>
+
+            <!-- Plugin para gerar Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>17</source> <!-- Ajuste conforme sua versão Java -->
+                    <show>protected</show>
+                    <failOnError>false</failOnError> <!-- Ignora erros de import de libs não visíveis no javadoc -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 
 
 </project>

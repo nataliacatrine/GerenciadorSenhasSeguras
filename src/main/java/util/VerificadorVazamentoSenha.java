@@ -7,8 +7,21 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Classe utilitária responsável por verificar se uma senha foi comprometida
+ * utilizando a API pública do projeto Have I Been Pwned.
+ * A verificação é feita por meio do protocolo de k-anonimato,
+ * enviando apenas os primeiros 5 caracteres do hash SHA-1 da senha.
+ */
 public class VerificadorVazamentoSenha {
 
+    /**
+     * Verifica se a senha informada já apareceu em vazamentos de dados conhecidos.
+     *
+     * @param senha A senha em texto plano que será verificada.
+     * @return true se a senha foi comprometida; false caso contrário.
+     * @throws Exception se ocorrer erro de rede ou de hash.
+     */
     public static boolean senhaVazada(String senha) throws Exception {
         String sha1 = sha1Hex(senha).toUpperCase();
         String prefixo = sha1.substring(0, 5);
@@ -30,13 +43,20 @@ public class VerificadorVazamentoSenha {
             String linha;
             while ((linha = in.readLine()) != null) {
                 if (linha.startsWith(sufixo)) {
-                    return true; // Senha vazada
+                    return true; // Senha encontrada na base de dados vazados
                 }
             }
         }
-        return false; // Senha não vazada
+        return false; // Senha não encontrada
     }
 
+    /**
+     * Calcula o hash SHA-1 da senha fornecida.
+     *
+     * @param input A senha em texto plano.
+     * @return Representação hexadecimal do hash SHA-1.
+     * @throws Exception se ocorrer erro na geração do hash.
+     */
     private static String sha1Hex(String input) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         byte[] bytes = md.digest(input.getBytes(StandardCharsets.UTF_8));

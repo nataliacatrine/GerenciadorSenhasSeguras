@@ -9,6 +9,11 @@ import java.security.*;
 import java.util.Arrays;
 import java.util.Base64;
 
+/**
+ * Classe utilitária para operações de criptografia e descriptografia usando AES-GCM.
+ * Inclui métodos para criptografar e descriptografar chaves AES e textos,
+ * além de derivação de chave mestra com PBKDF2.
+ */
 public class CriptografiaChaves {
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
@@ -18,6 +23,9 @@ public class CriptografiaChaves {
 
     /**
      * Gera uma chave AES de 256 bits aleatória.
+     *
+     * @return Nova chave secreta AES
+     * @throws NoSuchAlgorithmException Se o algoritmo AES não estiver disponível
      */
     public static SecretKey gerarChaveAES() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
@@ -26,7 +34,12 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Deriva uma chave mestra a partir da senha mestra do usuário e um salt.
+     * Deriva uma chave mestra com base em uma senha e um salt, utilizando PBKDF2.
+     *
+     * @param senhaMestra Senha mestre em formato de array de caracteres
+     * @param salt Salt aleatório
+     * @return Chave derivada como {@code SecretKey}
+     * @throws Exception Se ocorrer erro na derivação
      */
     public static SecretKey derivarChaveMestra(char[] senhaMestra, byte[] salt) throws Exception {
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -36,9 +49,13 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Criptografa uma chave AES usando a chave mestra.
-     * Usa AES/GCM/NoPadding com IV gerado aleatoriamente.
-     * Retorna resultado em Base64 com IV concatenado no início.
+     * Criptografa uma chave AES usando uma chave mestra.
+     * O IV é gerado aleatoriamente e incluído no início do resultado codificado em Base64.
+     *
+     * @param chaveAES    Chave AES a ser criptografada
+     * @param chaveMestra Chave mestra utilizada para criptografar
+     * @return String em Base64 contendo IV + chave criptografada
+     * @throws Exception Se ocorrer erro na criptografia
      */
     public static String criptografarChaveAES(SecretKey chaveAES, SecretKey chaveMestra) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -55,8 +72,13 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Descriptografa uma chave AES criptografada em Base64 usando a chave mestra.
-     * Espera que o IV esteja concatenado no início dos dados.
+     * Descriptografa uma chave AES criptografada com AES-GCM em Base64.
+     * O IV deve estar incluído no início da string codificada.
+     *
+     * @param chaveCriptografadaBase64 Chave criptografada codificada em Base64
+     * @param chaveMestra              Chave mestra usada na descriptografia
+     * @return Chave AES original
+     * @throws Exception Se ocorrer erro na descriptografia
      */
     public static SecretKey descriptografarChaveAES(String chaveCriptografadaBase64, SecretKey chaveMestra) throws Exception {
         byte[] dados = Base64.getDecoder().decode(chaveCriptografadaBase64);
@@ -75,8 +97,13 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Criptografa um texto (como uma senha) com AES-GCM usando a chave AES individual.
-     * O IV gerado aleatoriamente é concatenado no início do resultado codificado em Base64.
+     * Criptografa um texto usando AES-GCM com uma chave AES.
+     * O IV é gerado aleatoriamente e incluído no início do resultado codificado em Base64.
+     *
+     * @param texto    Texto em claro a ser criptografado
+     * @param chaveAES Chave AES usada na criptografia
+     * @return Texto criptografado em Base64
+     * @throws Exception Se ocorrer erro na criptografia
      */
     public static String criptografarTextoComAES(String texto, SecretKey chaveAES) throws Exception {
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -93,8 +120,13 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Descriptografa um texto criptografado com AES-GCM e codificado em Base64.
-     * Espera que o IV esteja concatenado no início dos dados.
+     * Descriptografa um texto criptografado com AES-GCM codificado em Base64.
+     * O IV deve estar incluído no início da string codificada.
+     *
+     * @param base64   Texto criptografado em Base64
+     * @param chaveAES Chave AES usada para descriptografar
+     * @return Texto original em claro
+     * @throws Exception Se ocorrer erro na descriptografia
      */
     public static String descriptografarTextoComAES(String base64, SecretKey chaveAES) throws Exception {
         byte[] combinado = Base64.getDecoder().decode(base64);
@@ -110,21 +142,32 @@ public class CriptografiaChaves {
     }
 
     /**
-     * Converte SecretKey para Base64 (String).
+     * Converte uma chave secreta {@code SecretKey} para uma string Base64.
+     *
+     * @param chave Chave secreta
+     * @return Representação em Base64
      */
     public static String chaveParaBase64(SecretKey chave) {
         return Base64.getEncoder().encodeToString(chave.getEncoded());
     }
 
     /**
-     * Converte Base64 para SecretKey.
+     * Converte uma string Base64 de volta para {@code SecretKey}.
+     *
+     * @param chaveBase64 Representação Base64 de uma chave
+     * @return Objeto {@code SecretKey}
      */
     public static SecretKey base64ParaChave(String chaveBase64) {
         byte[] decoded = Base64.getDecoder().decode(chaveBase64);
         return new SecretKeySpec(decoded, "AES");
     }
 
-    // Gera IV aleatório para AES-GCM
+    /**
+     * Gera um vetor de inicialização (IV) aleatório com o tamanho especificado.
+     *
+     * @param tamanho Tamanho em bytes do IV
+     * @return Vetor de bytes IV
+     */
     private static byte[] gerarIV(int tamanho) {
         byte[] iv = new byte[tamanho];
         SecureRandom random = new SecureRandom();

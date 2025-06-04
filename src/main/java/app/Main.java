@@ -9,7 +9,21 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/**
+ * Classe principal do Gerenciador de Senhas.
+ * <p>
+ * Este aplicativo realiza autenticação com senha mestra e verificação 2FA,
+ * e permite ao usuário gerenciar credenciais de serviços (listar, adicionar, remover).
+ * As senhas são criptografadas com AES-GCM usando chaves derivadas da senha mestra.
+ * </p>
+ */
 public class Main {
+
+    /**
+     * Método principal que inicia o gerenciador de senhas.
+     *
+     * @param args Argumentos da linha de comando (não utilizados).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         SecretKey chaveMestra = null;
@@ -85,7 +99,7 @@ public class Main {
             return;
         }
 
-        // Carrega as credenciais (sem passar chaveMestra)
+        // Carrega as credenciais criptografadas
         List<Credencial> credenciais = RepositorioCredenciais.carregar();
         System.out.println("Gerenciador de Senhas iniciado!");
         System.out.println("Credenciais carregadas: " + credenciais.size());
@@ -103,6 +117,7 @@ public class Main {
 
             switch (opcao) {
                 case "1":
+                    // Lista credenciais descriptografadas
                     if (credenciais.isEmpty()) {
                         System.out.println("Nenhuma credencial cadastrada.");
                     } else {
@@ -126,6 +141,7 @@ public class Main {
                     break;
 
                 case "2":
+                    // Adiciona nova credencial
                     System.out.print("Nome do serviço: ");
                     String servico = scanner.nextLine();
 
@@ -140,13 +156,13 @@ public class Main {
                         System.out.println("Senha gerada: " + senha);
                     }
 
-                    // Verificando vazamento de senha caso esteja online
+                    // Verifica vazamento
                     boolean senhaVazada;
                     try {
                         senhaVazada = VerificadorVazamentoSenha.senhaVazada(senha);
                     } catch (Exception e) {
                         System.out.println("Não foi possível verificar vazamento da senha (sem conexão). Prosseguindo sem verificação.");
-                        senhaVazada = false;  // libera o uso da senha no modo offline
+                        senhaVazada = false;
                     }
 
                     while (senhaVazada) {
@@ -167,14 +183,12 @@ public class Main {
 
                     Credencial nova = new Credencial(servico, usuario, senha, chaveMestra);
                     credenciais.add(nova);
-
-                    // Salvar sem passar chaveMestra
                     RepositorioCredenciais.salvar(credenciais);
-
                     System.out.println("Credencial adicionada com sucesso.");
                     break;
 
                 case "3":
+                    // Remove credencial selecionada
                     if (credenciais.isEmpty()) {
                         System.out.println("Nenhuma credencial para remover.");
                     } else {
@@ -183,10 +197,7 @@ public class Main {
                             int idx = Integer.parseInt(scanner.nextLine()) - 1;
                             if (idx >= 0 && idx < credenciais.size()) {
                                 Credencial removida = credenciais.remove(idx);
-
-                                // Salvar sem passar chaveMestra
                                 RepositorioCredenciais.salvar(credenciais);
-
                                 System.out.println("Removida: " + removida.getNomeServico());
                             } else {
                                 System.out.println("Índice inválido.");
@@ -198,6 +209,7 @@ public class Main {
                     break;
 
                 case "0":
+                    // Encerra o programa
                     executando = false;
                     System.out.println("Encerrando o gerenciador.");
                     break;
