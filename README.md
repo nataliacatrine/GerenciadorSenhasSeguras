@@ -107,3 +107,10 @@ GerenciadorSenhasSeguras/
 > O projeto é de uso educacional e demonstra boas práticas de segurança em Java, incluindo criptografia com AES, autenticação 2FA e verificação de senhas em vazamentos públicos.
 
 ---
+
+## 👤 Autoria
+
+Desenvolvido por **Natália Catrine**  
+GitHub: [@nataliacatrine](https://github.com/nataliacatrine)  
+LinkedIn: [Natália Catrine](https://www.linkedin.com/in/nat%C3%A1lia-catrine-33689526b)
+
