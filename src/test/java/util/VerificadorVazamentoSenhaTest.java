@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VerificadorVazamentoSenhaTest {
 
     @Test
-    void testSenhaNaoVazada() {
+    void testSenhaNaoVazada() throws Exception {
         String senhaUnica = "SenhaUnicaMuitoForte" + System.nanoTime();
         assertFalse(VerificadorVazamentoSenha.senhaVazada(senhaUnica));
     }
 
     @Test
-    void testSenhaVazada() {
+    void testSenhaVazada() throws Exception {
         assertTrue(VerificadorVazamentoSenha.senhaVazada("123456"));
     }
 }

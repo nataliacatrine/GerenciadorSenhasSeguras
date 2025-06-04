@@ -25,21 +25,21 @@
             <version>1.4.0</version>
         </dependency>
 
-        <!-- Biblioteca para JSON, se precisar salvar dados localmente -->
+        <!-- Biblioteca para JSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.15.2</version>
         </dependency>
 
-        <!-- Cliente HTTP para consumir APIs externas (verificação de vazamento) -->
+        <!-- Cliente HTTP para APIs externas -->
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
             <version>5.2.1</version>
         </dependency>
 
-        <!-- junit5-->
+        <!-- junit5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -54,12 +54,11 @@
             <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Plugin para executar a aplicação -->
+            <!-- Executar a aplicação -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -69,21 +68,20 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin para gerar Javadoc -->
+            <!-- Gerar Javadoc -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.6.3</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>17</source> <!-- Ajuste conforme sua versão Java -->
+                    <source>17</source>
                     <show>protected</show>
-                    <failOnError>false</failOnError> <!-- Ignora erros de import de libs não visíveis no javadoc -->
+                    <failOnError>false</failOnError>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-
-
 </project>
+

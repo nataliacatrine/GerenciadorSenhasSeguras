@@ -1,16 +1,16 @@
 [ {
   "nomeServico" : "uber",
   "usuario" : "lucca",
-  "senhaCriptografada" : "fQxZT0AOrU1yXAQIZtS276SZOG+pkUHViaYLocA4OtYJXptkJ/MVQw==",
-  "chaveAESCriptografada" : "Uz457PJfTj9QVd8Dd26QGabUeqJBhWKDC4HTnFKIjLfhdb3Beh0YFYGgNnjNH+h3f5tFNocYoyhVuRt7"
+  "senhaCriptografada" : "G/ywWNtO84glpBGionlCxaNoipsTazyzFT8cEQ85zZOgtF4mex8QGw==",
+  "chaveAESCriptografada" : "J9xr24aVVJFr96mivic5p3cMQweaD8j6lgpZmiQjxzlzeqAYlvibu1OjIoSBNsswtdobNYS0yPOJU1GI"
 }, {
-  "nomeServico" : "99pop",
+  "nomeServico" : "99",
   "usuario" : "natalia",
-  "senhaCriptografada" : "Btsiq5kfrLFN8tpSdeOs6OURj+Y+pFnzpMbq/QqE2B8ESR0bsbCT",
-  "chaveAESCriptografada" : "OhiLYruN2DoLH3m7IrXuj9f/32JCIp8U2PFCKBrsLqnDtmatD94pMNTrYMpJvdrlaJ38JfxbmP4uyair"
+  "senhaCriptografada" : "1USLQGhh9pCPM7c7+b1BoIsisIy4JsxHcs3TinSzX2LVyZEE2jvg",
+  "chaveAESCriptografada" : "joGrojiz47mVgBLvlU2LA/LQtfZoWOOGsrzOQD3cjR1N3ZZyvtFVl+t99hLG8doQt9AXfM/lL3i0zmFK"
 }, {
   "nomeServico" : "netflix",
   "usuario" : "leticia",
-  "senhaCriptografada" : "LugAGsX+nh/yNidMCb0hGQ8glWFIlgSMgl7/BMsQ/rwHYAPaoxJFXg==",
-  "chaveAESCriptografada" : "kQkL3fs1KFHbuAu3WIsdVvKX6Gc9dTJmfwfGLBS3pEf7kF7ny+VQSIvIpLLE677kcGy8EZ+V5AFQmSE9"
+  "senhaCriptografada" : "YSYkf4dSNIezAVzhwTDT/GrXuFZg6vgcL/fVmR2cj8GewzKtIaOvKQ==",
+  "chaveAESCriptografada" : "Lpiu6ZRpnFrYei41JTE1iMhkyBHJUuAMEaSAN6tEA66gJzqfuwmAxUr/yBkInzwpl0h4OOX8aa0mXuNP"
 } ]
