@@ -76,7 +76,7 @@ A documentação será gerada no diretório:
 target/site/apidocs
 ```
 
-Você pode visualizá-la localmente abrindo o arquivo `index.html` ou acessar online pelo GitHub Pages:
+Você pode visualizá-la localmente abrindo o arquivo `index.html` ou acessar online:
 
 📄 [Documentação Javadoc](https://nataliacatrine.github.io/GerenciadorSenhasSeguras/javadoc/)
 
